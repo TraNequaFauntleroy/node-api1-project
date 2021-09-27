@@ -56,6 +56,19 @@ server.post('/api/users', (req, res) => {
         }
 })
 
+// [DELETE] api/users/:id
+server.delete('/api/users/:id', async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+        res.status(404).json({
+            message: "The user with the specified ID does not exist"
+        })
+    } else {
+       const deletedUser = await User.remove(user.id)
+                res.status(200).json(deletedUser)
+    }
+})
+
 
 
 
